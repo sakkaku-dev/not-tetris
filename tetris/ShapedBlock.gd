@@ -16,49 +16,25 @@ func _ready():
 		block.set_color(color)
 
 func rotate_block() -> void:
-	self.rotation_degrees += 90
-	var block = _get_block_colliding_all()
-	if block:
-		
+	rotate(deg2rad(90))
+
+func rotate_back() -> void:
+	rotate(deg2rad(-90))
+
+func move_up() -> void:
+	global_translate(Vector2.UP * block_size)
 
 func move_down() -> void:
-	if not _blocks_on_floor():
-		global_translate(Vector2(0, block_size))
-	
-	if not placed and _blocks_on_floor():
-		placed = true
-		for block in blocks:
-			block.placed()
-		emit_signal("block_placed")
+	global_translate(Vector2.DOWN * block_size)
 
 func move_left() -> void:
-	if not _blocks_colliding_left():
-		global_translate(Vector2(-block_size, 0))
+	global_translate(Vector2.LEFT * block_size)
 		
 func move_right() -> void:
-	if not _blocks_colliding_right():
-		global_translate(Vector2(block_size, 0))
+	global_translate(Vector2.RIGHT * block_size)
 
-func _blocks_on_floor() -> bool:
+func any_block_invalid(grid: Grid) -> bool:
 	for block in blocks:
-		if block.is_colliding_bottom():
+		if not grid.is_valid_position(block.get_grid_position()):
 			return true
 	return false
-	
-func _blocks_colliding_left() -> bool:
-	for block in blocks:
-		if block.is_colliding_left():
-			return true
-	return false
-
-func _blocks_colliding_right() -> bool:
-	for block in blocks:
-		if block.is_colliding_right():
-			return true
-	return false
-
-func _get_block_colliding_all() -> Block:
-	for block in blocks:
-		if block.is_colliding_right() and block.is_colliding_left() and block.is_colliding_bottom() and block.is_colliding_top():
-			return block
-	return null
