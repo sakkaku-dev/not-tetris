@@ -1,0 +1,71 @@
+; Engine configuration file.
+; It's best edited using the editor UI and not directly,
+; since the parameters that go here are not all obvious.
+;
+; Format:
+;   [section] ; section goes between []
+;   param=value ; assign values to parameters
+
+config_version=4
+
+_global_script_classes=[ {
+"base": "Node2D",
+"class": "Block",
+"language": "GDScript",
+"path": "res://tetris/Block.gd"
+}, {
+"base": "TileMap",
+"class": "Grid",
+"language": "GDScript",
+"path": "res://Grid.gd"
+}, {
+"base": "Node2D",
+"class": "ShapedBlock",
+"language": "GDScript",
+"path": "res://tetris/ShapedBlock.gd"
+} ]
+_global_script_class_icons={
+"Block": "",
+"Grid": "",
+"ShapedBlock": ""
+}
+
+[application]
+
+config/name="inverse-tetris"
+config/icon="res://icon.png"
+
+[display]
+
+window/size/width=540
+window/size/height=960
+window/stretch/mode="2d"
+
+[input]
+
+block_left={
+"deadzone": 0.5,
+"events": [ Object(InputEventKey,"resource_local_to_scene":false,"resource_name":"","device":0,"alt":false,"shift":false,"control":false,"meta":false,"command":false,"pressed":false,"scancode":16777231,"unicode":0,"echo":false,"script":null)
+ ]
+}
+block_right={
+"deadzone": 0.5,
+"events": [ Object(InputEventKey,"resource_local_to_scene":false,"resource_name":"","device":0,"alt":false,"shift":false,"control":false,"meta":false,"command":false,"pressed":false,"scancode":16777233,"unicode":0,"echo":false,"script":null)
+ ]
+}
+block_rotate={
+"deadzone": 0.5,
+"events": [ Object(InputEventKey,"resource_local_to_scene":false,"resource_name":"","device":0,"alt":false,"shift":false,"control":false,"meta":false,"command":false,"pressed":false,"scancode":16777232,"unicode":0,"echo":false,"script":null)
+ ]
+}
+
+[layer_names]
+
+2d_render/layer_1="ground"
+2d_physics/layer_1="ground"
+2d_render/layer_2="blocks"
+2d_physics/layer_2="blocks"
+
+[rendering]
+
+environment/default_environment="res://default_env.tres"
