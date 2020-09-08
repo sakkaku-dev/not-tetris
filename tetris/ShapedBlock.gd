@@ -33,13 +33,12 @@ func move_right() -> void:
 
 func any_block_invalid(grid: Grid) -> bool:
 	for block in blocks:
-		if not grid.is_valid_position(block.get_grid_position()):
+		if not grid.is_valid_position(block.global_position):
 			return true
 	return false
 
 func all_blocks_below_grid(grid: Grid) -> bool:
 	for block in blocks:
-		var normalized = grid.normalized_position(block.get_grid_position())
-		if normalized.y >= -1:
+		if not grid.is_below_grid(block.global_position):
 			return false
 	return true

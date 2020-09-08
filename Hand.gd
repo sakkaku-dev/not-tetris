@@ -1,5 +1,7 @@
 extends Node2D
 
+signal reached_top
+
 export var grid_path: NodePath
 onready var grid: Grid = get_node(grid_path)
 
@@ -44,7 +46,6 @@ func _spawn_block() -> void:
 	# add relative position from grid to keep original offset needed for some blocks
 	block.global_position -= grid.global_position - global_position
 	block.connect("block_placed", self, "place_block")
-	print("Spawned")
 
 func place_block() -> void:
 	_spawn_block()
@@ -56,5 +57,11 @@ func move_and_process_block():
 		_spawn_block()
 	elif block.any_block_invalid(grid):
 		block.move_up()
+		for b in block.blocks:
+			if b.global_position.y <= global_position.y:
+				print("Reached Top")
+				emit_signal("reached_top")
+				return
+
 		grid.put_blocks(block.blocks)
 		_spawn_block()

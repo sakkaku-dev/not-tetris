@@ -1,7 +1,14 @@
 extends KinematicBody2D
 
+class_name Player
+
+signal died
+
 export var speed = 50
 export var jump = -50
+
+export var grid_path: NodePath
+onready var grid: Grid = get_node(grid_path)
 
 onready var head_cast := $HeadCast
 onready var gravity = ProjectSettings.get_setting("physics/2d/default_gravity") * ProjectSettings.get_setting("physics/2d/default_gravity_vector")
@@ -31,6 +38,13 @@ func _physics_process(delta: float) -> void:
 	if not head_cast.is_colliding() and is_on_wall() and is_on_floor():
 		velocity.y = jump
 	
+	if grid.is_below_grid(global_position):
+		die()
+	
 	velocity.x = side_motion * speed
 	velocity += gravity * delta
 	velocity = move_and_slide(velocity, Vector2.UP)
+
+func die() -> void:
+	hide() # Do not remove player, still needed by other nodes
+	emit_signal("died")

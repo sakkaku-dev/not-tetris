@@ -20,11 +20,5 @@ func move_left() -> void:
 func move_right() -> void:
 	global_translate(Vector2.RIGHT * block_size)
 
-func get_grid_position() -> Vector2:
-	# Minus one to make it zero-based
-	var x = ceil(global_position.x / block_size) - 1
-
-	# Y axis is already zero-based?
-	var y = ceil(global_position.y / block_size)
-
-	return Vector2(x, y)
+func _on_Area2D_body_entered(body: Player):
+	body.die()

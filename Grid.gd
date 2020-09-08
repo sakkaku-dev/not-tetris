@@ -22,7 +22,8 @@ func _ready():
 		grid[y].resize(width)
 
 func is_valid_position(pos: Vector2) -> bool:
-	return pos.y <= 0 and pos.x >= 0 and pos.x < width \
+	var grid_pos = _get_grid_position(pos)
+	return grid_pos.y <= 0 and grid_pos.x >= 0 and grid_pos.x < width \
 		and get_block_at(pos) == null
 
 func get_block_at(pos: Vector2):
@@ -31,7 +32,11 @@ func get_block_at(pos: Vector2):
 
 func normalized_position(pos: Vector2) -> Vector2:
 	# In 2D upward y axis is negative
-	return Vector2(pos.x, abs(pos.y) - growed * GRID_GROW_SIZE)
+	var local_pos = _get_grid_position(pos)
+	return Vector2(local_pos.x, abs(local_pos.y) - growed * GRID_GROW_SIZE)
+
+func is_below_grid(pos: Vector2) -> bool:
+	return normalized_position(pos).y < 0
 
 func extend_grid_height() -> void:
 	var rect = get_used_rect() as Rect2
@@ -53,9 +58,18 @@ func extend_grid_height() -> void:
 		
 	growed += 1
 
+func _get_grid_position(pos: Vector2) -> Vector2:
+	# Minus one to make it zero-based
+	var x = ceil(pos.x / cell_size.x) - 1
+
+	# Y axis is already zero-based?
+	var y = ceil(pos.y / cell_size.x)
+
+	return Vector2(x, y)
+
 func put_blocks(blocks: Array) -> void:
 	for block in blocks:
-		var pos = normalized_position(block.get_grid_position())
+		var pos = normalized_position(block.global_position)
 		if pos.y < 0:
 			block.queue_free()
 		else:
