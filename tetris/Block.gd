@@ -2,6 +2,7 @@ extends Node2D
 
 class_name Block
 
+onready var player_collision := $Area2D/CollisionShape2D
 onready var texture := $Texture
 onready var block_size: int = texture.texture.get_height()
 
@@ -20,5 +21,9 @@ func move_left() -> void:
 func move_right() -> void:
 	global_translate(Vector2.RIGHT * block_size)
 
+# Area2D does not work inside Player script
 func _on_Area2D_body_entered(body: Player):
 	body.die()
+
+func enable_player_kill() -> void:
+	player_collision.disabled = false

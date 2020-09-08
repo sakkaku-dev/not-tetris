@@ -74,6 +74,7 @@ func put_blocks(blocks: Array) -> void:
 			block.queue_free()
 		else:
 			grid[pos.y][pos.x] = block
+			block.enable_player_kill()
 
 	_clear_full_lines()
 	_clear_empty_shaped_blocks()

@@ -8,21 +8,21 @@
 [ext_resource path="res://CameraStepFollow.gd" type="Script" id=6]
 [ext_resource path="res://gui/dynamicfont.tres" type="DynamicFont" id=7]
 
-[sub_resource type="DynamicFontData" id=5]
+[sub_resource type="DynamicFontData" id=1]
 antialiased = false
 font_path = "res://gui/m3x6.ttf"
 
-[sub_resource type="DynamicFont" id=6]
+[sub_resource type="DynamicFont" id=2]
 size = 24
-font_data = SubResource( 5 )
+font_data = SubResource( 1 )
 
-[sub_resource type="ConvexPolygonShape2D" id=1]
+[sub_resource type="ConvexPolygonShape2D" id=3]
 points = PoolVector2Array( 0, 0, 0, 0, 0, 0, 0, 0 )
 
-[sub_resource type="ConvexPolygonShape2D" id=2]
+[sub_resource type="ConvexPolygonShape2D" id=4]
 points = PoolVector2Array( 8, 8, 0, 8, 0, 0, 8, 0 )
 
-[sub_resource type="TileSet" id=3]
+[sub_resource type="TileSet" id=5]
 1/name = "tetris-bg.png 1"
 1/texture = ExtResource( 5 )
 1/tex_offset = Vector2( 0, 0 )
@@ -33,20 +33,20 @@ points = PoolVector2Array( 8, 8, 0, 8, 0, 0, 8, 0 )
 1/navigation_offset = Vector2( 0, 0 )
 1/shape_offset = Vector2( 0, 0 )
 1/shape_transform = Transform2D( 1, 0, 0, 1, 0, 0 )
-1/shape = SubResource( 1 )
+1/shape = SubResource( 3 )
 1/shape_one_way = false
 1/shape_one_way_margin = 1.0
 1/shapes = [ {
 "autotile_coord": Vector2( 0, 0 ),
 "one_way": false,
 "one_way_margin": 1.0,
-"shape": SubResource( 1 ),
+"shape": SubResource( 3 ),
 "shape_transform": Transform2D( 1, 0, 0, 1, 0, 0 )
 }, {
 "autotile_coord": Vector2( 0, 0 ),
 "one_way": false,
 "one_way_margin": 1.0,
-"shape": SubResource( 2 ),
+"shape": SubResource( 4 ),
 "shape_transform": Transform2D( 1, 0, 0, 1, 0, 0 )
 } ]
 1/z_index = 0
@@ -100,7 +100,7 @@ __meta__ = {
 [node name="GameOver" type="Label" parent="CameraStepFollow/UI/Info"]
 margin_right = 93.0
 margin_bottom = 19.0
-custom_fonts/font = SubResource( 6 )
+custom_fonts/font = SubResource( 2 )
 text = "Game Over"
 align = 1
 
@@ -114,7 +114,7 @@ to main menu"
 align = 1
 
 [node name="Grid" type="TileMap" parent="."]
-tile_set = SubResource( 3 )
+tile_set = SubResource( 5 )
 cell_size = Vector2( 8, 8 )
 cell_custom_transform = Transform2D( 0, 0, 0, 0, 0, 0 )
 collision_mask = 0
