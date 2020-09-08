@@ -2,8 +2,6 @@ extends Node2D
 
 class_name ShapedBlock
 
-signal block_placed
-
 export var color: Color
 
 onready var blocks := [$BlockRotation/Block, $BlockRotation/Block2, $BlockRotation/Block3, $BlockRotation/Block4]
@@ -38,3 +36,10 @@ func any_block_invalid(grid: Grid) -> bool:
 		if not grid.is_valid_position(block.get_grid_position()):
 			return true
 	return false
+
+func all_blocks_below_grid(grid: Grid) -> bool:
+	for block in blocks:
+		var normalized = grid.normalized_position(block.get_grid_position())
+		if normalized.y >= -1:
+			return false
+	return true

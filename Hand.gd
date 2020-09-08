@@ -39,15 +39,22 @@ func _spawn_block() -> void:
 	var block_idx = randi() % blocks.size()
 	var shape = load(blocks[block_idx])
 	block = shape.instance() as Node2D
-	add_child(block)
+	grid.add_child(block)
+	
+	# add relative position from grid to keep original offset needed for some blocks
+	block.global_position -= grid.global_position - global_position
 	block.connect("block_placed", self, "place_block")
+	print("Spawned")
 
 func place_block() -> void:
 	_spawn_block()
 
 func move_and_process_block():
 	block.move_down()
-	if block.any_block_invalid(grid):
+	if block.all_blocks_below_grid(grid):
+		block.queue_free()
+		_spawn_block()
+	elif block.any_block_invalid(grid):
 		block.move_up()
 		grid.put_blocks(block.blocks)
 		_spawn_block()
