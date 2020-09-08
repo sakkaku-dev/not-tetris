@@ -6,16 +6,16 @@ name: CI
 # events but only for the master branch
 on:
   push:
-    branches: [ master ]
+    branches: [master]
   pull_request:
-    branches: [ master ]
+    branches: [master]
 
 jobs:
   export-web:
     name: Web Export
     runs-on: ubuntu-latest
-    container: 
-      image: BARICHELLO/godot-ci@3.2.2
+    container:
+      image: barichello/godot-ci@3.2.2
     steps:
       - name: Checkout
         uses: actions/checkout@v1
