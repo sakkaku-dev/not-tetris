@@ -39,6 +39,7 @@ jobs:
         uses: actions/download-artifact@v2
         with:
           name: export-web
+          path: build/web
       # Installing rsync is needed in order to deploy to GitHub Pages. Without it, the build will fail.
       - name: Install rsync 📚
         run: sudo apt-get update && sudo apt-get install -y rsync
@@ -57,6 +58,7 @@ jobs:
         uses: actions/download-artifact@v2
         with:
           name: export-web
+          path: build/web
       - name: Deploy
         shell: bash
         env:
