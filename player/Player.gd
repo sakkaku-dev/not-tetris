@@ -17,14 +17,17 @@ var velocity = Vector2.ZERO
 var side_motion = 0
 
 func _unhandled_input(event: InputEvent) -> void:
-	if event.is_action_pressed("move_left") or event.is_action_pressed("move_right"):
-		_update_input()
+	_update_input()
 
 func _update_input() -> void:
-	if Input.is_action_pressed("move_left"):
+	var pressed_left = Input.is_action_pressed("move_left")
+	var pressed_right = Input.is_action_pressed("move_right")
+	
+	if pressed_left and not pressed_right:
 		side_motion = -1
 		head_cast.rotation_degrees = 90
-	elif Input.is_action_pressed("move_right"):
+	
+	if pressed_right and not pressed_left:
 		side_motion = 1
 		head_cast.rotation_degrees = -90
 		

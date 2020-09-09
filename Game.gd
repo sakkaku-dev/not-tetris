@@ -6,12 +6,17 @@ onready var high_score_label := $CameraStepFollow/UI/HighScore
 onready var info_label := $CameraStepFollow/UI/Info
 onready var game_tick := $GameTick
 
+onready var audio := $BGM
+onready var audio_tween := $BGM/Tween
+
 var last_tick_increase = 0
 var high_score = 0 setget set_high_score
 var game_over = false
 	
 func _ready():
 	high_score_label.text = str(high_score)
+	audio_tween.interpolate_property(audio, "volume_db", -50, -20, 2)
+	audio_tween.start()
 	
 func _input(event: InputEvent) -> void:
 	if game_over:
@@ -41,3 +46,5 @@ func game_over():
 	game_over = true
 	info_label.show()
 	game_tick.stop()
+	audio_tween.interpolate_property(audio, "volume_db", -20, -50, 2)
+	audio_tween.start()
