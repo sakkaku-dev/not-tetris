@@ -59,9 +59,9 @@ jobs:
           name: export-web
       - name: Deploy
         shell: bash
+        env:
+          BUTLER_API_KEY: ${{secrets.BUTLER_API_KEY}}
         run: |
           wget -O butler.zip https://broth.itch.ovh/butler/linux-amd64/LATEST/archive/default
           unzip butler.zip
           ./butler push build/web sakkaku13/not-tetris:web
-        with:
-          BUTLER_API_KEY: ${{secrets.BUTLER_API_KEY}}
