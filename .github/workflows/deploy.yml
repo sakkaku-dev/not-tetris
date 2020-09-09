@@ -7,8 +7,6 @@ name: CI
 on:
   push:
     branches: [master]
-  pull_request:
-    branches: [master]
 
 jobs:
   export-web:
@@ -28,10 +26,19 @@ jobs:
           mkdir -v -p build/web
           godot -v --export "HTML5" ./build/web/index.html
       - name: Upload Artifact
-        uses: actions/upload-artifact@v1
+        uses: actions/upload-artifact@v2
         with:
-          name: web
+          name: export-web
           path: build/web
+  publish-gh:
+    name: Publish Github Pages
+    runs-on: ubuntu-latest
+    needs: export-web
+    steps:
+      - name: Download export-web artifact
+        uses: actions/download-artifact@v2
+        with:
+          name: export-web
       # Installing rsync is needed in order to deploy to GitHub Pages. Without it, the build will fail.
       - name: Install rsync 📚
         run: |
